@@ -2,6 +2,8 @@ package org.snakeInc.snake;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.snakeinc.snake.exception.OutOfPlayException;
+import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.model.Apple;
 import org.snakeinc.snake.model.Snake;
 
@@ -16,7 +18,7 @@ public class SnakeTest {
 
     }
 
-    @Test void snakeMovesUp_ReturnCorrectHead() {
+    @Test void snakeMovesUp_ReturnCorrectHead() throws OutOfPlayException, SelfCollisionException {
         Snake snake = new Snake();
         snake.move('U');
         Assertions.assertEquals(5, snake.getHead().getX());
