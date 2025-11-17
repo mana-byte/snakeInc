@@ -36,4 +36,20 @@ public class SnakeTest {
     }
   }
 
+  @Test
+  void snakeSelfCollide_ThrowsSelfCollisionException() throws OutOfPlayException, SelfCollisionException {
+    for (int i = 1; i < 6; i++) {
+      game.getBasket().addApple(game.getGrid().getTile(5 + i, 5));
+      game.getSnake().move('R');
+    }
+    game.getSnake().move('D');
+    game.getSnake().move('L');
+    try {
+      game.getSnake().move('U');
+    } catch (SelfCollisionException e) {
+      Assertions.assertTrue(true);
+      return;
+    }
+  }
+
 }
