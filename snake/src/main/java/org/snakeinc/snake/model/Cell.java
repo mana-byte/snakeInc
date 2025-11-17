@@ -37,6 +37,10 @@ public class Cell {
     this.snake = null;
   }
 
+  public Snake getSnake() {
+    return this.snake;
+  }
+
   public void removeApple() {
     this.apple = null;
   }
