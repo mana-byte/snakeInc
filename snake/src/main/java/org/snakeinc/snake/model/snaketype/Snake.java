@@ -5,8 +5,8 @@ import org.snakeinc.snake.GameParams;
 import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.exception.SizeIsZeroException;
-import org.snakeinc.snake.model.Apple;
-import org.snakeinc.snake.model.AppleEatenListener;
+import org.snakeinc.snake.model.foodtype.Food;
+import org.snakeinc.snake.model.foodtype.FoodEatenListener;
 import org.snakeinc.snake.model.Cell;
 import org.snakeinc.snake.model.Directions;
 import org.snakeinc.snake.model.Grid;
@@ -18,14 +18,14 @@ import lombok.Getter;
 public sealed class Snake permits BoaConstrictor, Anaconda, Python {
 
   protected final ArrayList<Cell> body;
-  protected final AppleEatenListener onAppleEatenListener;
+  protected final FoodEatenListener onFoodEatenListener;
   private final Grid grid;
   protected @Getter Color color;
   private int initSize;
 
-  public Snake(AppleEatenListener listener, Grid grid) {
+  public Snake(FoodEatenListener listener, Grid grid) {
     this.body = new ArrayList<>();
-    this.onAppleEatenListener = listener;
+    this.onFoodEatenListener = listener;
     this.grid = grid;
     this.color = Color.GREEN;
     this.initSize = GameParams.SNAKE_DEFAULT_SIZE;
@@ -34,9 +34,9 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
     body.add(head);
   }
 
-  public Snake(AppleEatenListener listener, Grid grid, Integer initSize) {
+  public Snake(FoodEatenListener listener, Grid grid, Integer initSize) {
     this.body = new ArrayList<>();
-    this.onAppleEatenListener = listener;
+    this.onFoodEatenListener = listener;
     this.grid = grid;
     this.color = Color.GREEN;
     this.initSize = initSize;
@@ -56,10 +56,10 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
     return body.getFirst();
   }
 
-  public void eat(Apple apple, Cell cell) {
+  public void eat(Food food, Cell cell) {
     this.body.addFirst(cell);
     cell.addSnake(this);
-    onAppleEatenListener.onAppleEaten(apple, cell);
+    onFoodEatenListener.onFoodEaten(food, cell);
   }
 
   public void move(Directions direction) throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
@@ -88,8 +88,8 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
     }
 
     // Eat apple :
-    if (newHead.containsAnApple()) {
-      this.eat(newHead.getApple(), newHead);
+    if (newHead.containsFood()) {
+      this.eat(newHead.getFood(), newHead);
       return;
     }
 
@@ -106,7 +106,6 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
       body.removeLast();
     } else
       this.initSize--;
-
   }
 
 }

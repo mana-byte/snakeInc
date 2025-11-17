@@ -28,8 +28,8 @@ public class CellUI {
 
   public void draw(Graphics g) {
 
-    if (cell.containsAnApple()) {
-      g.setColor(Color.RED);
+    if (cell.containsFood()) {
+      g.setColor(cell.getFood().getColor());
       drawOval(g);
     }
     if (cell.containsASnake()) {

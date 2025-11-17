@@ -1,22 +1,25 @@
 package org.snakeinc.snake.model.snaketype;
 
-import org.snakeinc.snake.model.AppleEatenListener;
 import org.snakeinc.snake.model.Cell;
 import org.snakeinc.snake.model.Grid;
+import org.snakeinc.snake.model.foodtype.Brocoli;
+import org.snakeinc.snake.model.foodtype.Food;
+import org.snakeinc.snake.model.foodtype.FoodEatenListener;
+
 import java.awt.Color;
 
-import org.snakeinc.snake.model.Apple;
-
 public final class BoaConstrictor extends Snake {
-  public BoaConstrictor(AppleEatenListener listener, Grid grid) {
+  public BoaConstrictor(FoodEatenListener listener, Grid grid) {
     super(listener, grid);
     this.color = Color.BLUE;
   }
 
   @Override
-  public void eat(Apple apple, Cell cell) {
-    this.body.getLast().removeSnake();
-    this.body.removeLast();
-    onAppleEatenListener.onAppleEaten(apple, cell);
+  public void eat(Food food, Cell cell) {
+    if (!(food instanceof Brocoli)) {
+      this.body.getLast().removeSnake();
+      this.body.removeLast();
+    }
+    onFoodEatenListener.onFoodEaten(food, cell);
   }
 }

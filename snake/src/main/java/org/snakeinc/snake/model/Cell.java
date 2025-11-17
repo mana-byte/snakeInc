@@ -1,5 +1,6 @@
 package org.snakeinc.snake.model;
 
+import org.snakeinc.snake.model.foodtype.Food;
 import org.snakeinc.snake.model.snaketype.Snake;
 
 import lombok.Data;
@@ -20,15 +21,19 @@ public class Cell {
   private int y;
 
   Snake snake;
-  Apple apple;
+  Food food;
 
   public Cell(int x, int y) {
     setX(x);
     setY(y);
   }
 
-  public void addApple(Apple apple) {
-    this.apple = apple;
+  public Food getFood() {
+    return this.food;
+  }
+
+  public void addFood(Food food) {
+    this.food = food;
   }
 
   public void addSnake(Snake snake) {
@@ -43,16 +48,16 @@ public class Cell {
     return this.snake;
   }
 
-  public void removeApple() {
-    this.apple = null;
+  public void removeFood() {
+    this.food = null;
   }
 
   public boolean containsASnake() {
     return this.snake != null;
   }
 
-  public boolean containsAnApple() {
-    return this.apple != null;
+  public boolean containsFood() {
+    return this.food != null;
   }
 
 }
