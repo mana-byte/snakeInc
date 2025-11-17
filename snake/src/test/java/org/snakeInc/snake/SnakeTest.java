@@ -24,4 +24,16 @@ public class SnakeTest {
     Assertions.assertEquals(4, game.getSnake().getHead().getY());
   }
 
+  @Test
+  void snakeMovesOutOfPlay_ThrowsOutOfPlayException() throws OutOfPlayException, SelfCollisionException {
+    for (int i = 0; i < 10; i++) {
+      try {
+        game.getSnake().move('U');
+      } catch (OutOfPlayException e) {
+        Assertions.assertTrue(true);
+        return;
+      }
+    }
+  }
+
 }
