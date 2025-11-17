@@ -7,21 +7,19 @@ import org.snakeinc.snake.exception.SelfCollisionException;
 @Getter
 public class Game {
 
-    private final Grid grid;
-    private final Basket basket;
-    private final Snake snake;
+  private final Grid grid;
+  private final Basket basket;
+  private final Snake snake;
 
-    public Game() {
-        grid = new Grid();
-        basket = new Basket(grid);
-        basket.refillIfNeeded(1);
-        snake = new Snake((apple, cell) -> basket.removeAppleInCell(apple,cell), grid);
-    }
+  public Game() {
+    grid = new Grid();
+    basket = new Basket(grid);
+    basket.refillIfNeeded(1);
+    snake = new Snake((apple, cell) -> basket.removeAppleInCell(apple, cell), grid);
+  }
 
-    public void iterate(char direction) throws OutOfPlayException, SelfCollisionException {
-        snake.move(direction);
-        basket.refillIfNeeded(1);
-    }
-
-
+  public void iterate(char direction) throws OutOfPlayException, SelfCollisionException {
+    snake.move(direction);
+    basket.refillIfNeeded(1);
+  }
 }
