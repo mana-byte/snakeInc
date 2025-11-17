@@ -6,6 +6,8 @@ import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.model.Directions;
 
+import lombok.Getter;
+
 public class Snake {
 
   private final ArrayList<Cell> body;
