@@ -3,9 +3,10 @@ package org.snakeinc.snake.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import lombok.Data;
+
 import org.snakeinc.snake.GameParams;
-import org.snakeinc.snake.model.Snake;
+
+import lombok.Data;
 
 @Data
 public class Basket {
@@ -19,7 +20,7 @@ public class Basket {
   }
 
   public void addApple(Cell cell) {
-    // Generates a random cell if null and makes sure it is not on the snake 
+    // Generates a random cell if null and makes sure it is not on the snake
     Random random = new Random();
     if (cell == null) {
       cell = grid.getTile(random.nextInt(0, GameParams.TILES_X), random.nextInt(0, GameParams.TILES_Y));

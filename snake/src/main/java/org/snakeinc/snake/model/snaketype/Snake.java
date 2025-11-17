@@ -1,27 +1,45 @@
-package org.snakeinc.snake.model;
+package org.snakeinc.snake.model.snaketype;
 
 import java.util.ArrayList;
 import org.snakeinc.snake.GameParams;
 import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.exception.SizeIsZeroException;
+import org.snakeinc.snake.model.Apple;
+import org.snakeinc.snake.model.AppleEatenListener;
+import org.snakeinc.snake.model.Cell;
 import org.snakeinc.snake.model.Directions;
+import org.snakeinc.snake.model.Grid;
+
 import java.awt.Color;
 
 import lombok.Getter;
 
-public class Snake {
+public sealed class Snake permits BoaConstrictor, Anaconda, Python {
 
   protected final ArrayList<Cell> body;
   protected final AppleEatenListener onAppleEatenListener;
   private final Grid grid;
   protected @Getter Color color;
+  private int initSize;
 
   public Snake(AppleEatenListener listener, Grid grid) {
     this.body = new ArrayList<>();
     this.onAppleEatenListener = listener;
     this.grid = grid;
     this.color = Color.GREEN;
+    this.initSize = GameParams.SNAKE_DEFAULT_SIZE;
+    Cell head = grid.getTile(GameParams.SNAKE_DEFAULT_X, GameParams.SNAKE_DEFAULT_Y);
+    head.addSnake(this);
+    body.add(head);
+  }
+
+  public Snake(AppleEatenListener listener, Grid grid, Integer initSize) {
+    this.body = new ArrayList<>();
+    this.onAppleEatenListener = listener;
+    this.grid = grid;
+    this.color = Color.GREEN;
+    this.initSize = initSize;
     Cell head = grid.getTile(GameParams.SNAKE_DEFAULT_X, GameParams.SNAKE_DEFAULT_Y);
     head.addSnake(this);
     body.add(head);
@@ -83,8 +101,11 @@ public class Snake {
     newHead.addSnake(this);
     body.addFirst(newHead);
 
-    body.getLast().removeSnake();
-    body.removeLast();
+    if (this.initSize < 2) {
+      body.getLast().removeSnake();
+      body.removeLast();
+    } else
+      this.initSize--;
 
   }
 

@@ -1,5 +1,7 @@
 package org.snakeinc.snake.model;
 
+import org.snakeinc.snake.model.snaketype.Snake;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,7 +22,7 @@ public class Cell {
   Snake snake;
   Apple apple;
 
-  protected Cell(int x, int y) {
+  public Cell(int x, int y) {
     setX(x);
     setY(y);
   }

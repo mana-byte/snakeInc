@@ -9,6 +9,7 @@ import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.exception.SizeIsZeroException;
 import org.snakeinc.snake.model.snaketype.Anaconda;
 import org.snakeinc.snake.model.snaketype.Python;
+import org.snakeinc.snake.model.snaketype.Snake;
 import org.snakeinc.snake.model.snaketype.BoaConstrictor;
 
 @Getter

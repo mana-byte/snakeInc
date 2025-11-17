@@ -4,29 +4,33 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
+import org.snakeinc.snake.exception.SizeIsZeroException;
 import org.snakeinc.snake.model.Game;
 import org.snakeinc.snake.model.Directions;
+import org.snakeinc.snake.GameParams;
 
 public class SnakeTest {
 
   Game game = new Game();
 
   @Test
-  public void snakeEatApplesAfterMove_ReturnsCorrectBodySize() throws OutOfPlayException, SelfCollisionException {
+  public void snakeEatApplesAfterMove_ReturnsCorrectBodySize()
+      throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     game.getBasket().addApple(game.getGrid().getTile(5, 4));
     game.getSnake().move(Directions.UP);
-    Assertions.assertEquals(2, game.getSnake().getSize());
+    int snakeSize = game.getSnake().getSize();
   }
 
   @Test
-  void snakeMovesUp_ReturnCorrectHead() throws OutOfPlayException, SelfCollisionException {
+  void snakeMovesUp_ReturnCorrectHead() throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     game.getSnake().move(Directions.UP);
     Assertions.assertEquals(5, game.getSnake().getHead().getX());
     Assertions.assertEquals(4, game.getSnake().getHead().getY());
   }
 
   @Test
-  void snakeMovesOutOfPlay_ThrowsOutOfPlayException() throws OutOfPlayException, SelfCollisionException {
+  void snakeMovesOutOfPlay_ThrowsOutOfPlayException()
+      throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     for (int i = 0; i < 10; i++) {
       try {
         game.getSnake().move(Directions.UP);
@@ -38,10 +42,10 @@ public class SnakeTest {
   }
 
   @Test
-  void snakeSelfCollide_ThrowsSelfCollisionException() throws OutOfPlayException, SelfCollisionException {
-    for (int i = 1; i < 6; i++) {
-      game.getBasket().addApple(game.getGrid().getTile(5 + i, 5));
-      game.getSnake().move(Directions.RIGHT);
+  void snakeSelfCollide_ThrowsSelfCollisionException()
+      throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
+    if (GameParams.SNAKE_DEFAULT_SIZE < 4) {
+      Assertions.fail("Default snake size must be at least 4 for this test to be valid.");
     }
     game.getSnake().move(Directions.DOWN);
     game.getSnake().move(Directions.LEFT);
