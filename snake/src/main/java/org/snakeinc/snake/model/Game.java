@@ -30,13 +30,14 @@ public class Game {
     grid = new Grid();
     basket = new Basket(grid);
     this.snake = generateSnakeObject();
-    this.snake.setScoreWrapper(score);
+    this.snake.setScoreWrapper(this.score);
     basket.refillIfNeeded(1);
   }
 
   public void iterate(Directions direction) throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     snake.move(direction);
     basket.refillIfNeeded(1);
+    System.out.println("Score: " + score.value);
   }
 
   private Snake generateSnakeObject() {

@@ -95,14 +95,15 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
       throw new SelfCollisionException();
     }
 
-    // Eat apple :
-    if (newHead.containsFood()) {
-      this.eat(newHead.getFood(), newHead);
-      return;
-    }
-
     if (this.getSize() == 0) {
       throw new SizeIsZeroException();
+    }
+
+    // Eat apple :
+    if (newHead.containsFood()) {
+      calculateScore(newHead.getFood());
+      this.eat(newHead.getFood(), newHead);
+      return;
     }
 
     // The snake did not eat :
@@ -117,14 +118,30 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
   }
 
   private void calculateScore(Food food) {
+    if (food == null) {
+      System.out.println("Food is null, cannot calculate score.");
+      return;
+    }
     if (this.score != null) {
+
       if (food instanceof Apple) {
+        Apple apple = (Apple) food;
+        if (apple.isSteamed()) {
+          this.score.setValue(this.score.getValue() + GameParams.SCORE_SPECIAL_FOOD);
+          return;
+        }
         this.score.setValue(this.score.getValue() + GameParams.SCORE_APPLE);
       }
+
       if (food instanceof Brocoli) {
-        // NOTE: FINISH HERE SCORE FOR EACH FOOD ITEM
+        Brocoli brocoli = (Brocoli) food;
+        if (brocoli.isSteamed()) {
+          this.score.setValue(this.score.getValue() + GameParams.SCORE_SPECIAL_FOOD);
+          return;
+        }
         this.score.setValue(this.score.getValue() + GameParams.SCORE_BROCOLI);
       }
+
     } else {
       System.out.println("Score wrapper is not set for this snake.");
     }

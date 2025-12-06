@@ -10,7 +10,6 @@ import lombok.Getter;
 public sealed class Food permits Apple, Brocoli {
 
   protected Color color;
-
   public Food() {
     this.color = Color.WHITE;
   }
@@ -20,11 +19,10 @@ public sealed class Food permits Apple, Brocoli {
     boolean isSpecial = Math.random() < 0.5 ? true : false;
     if (Math.random() < 0.5) {
       food = new Apple(isSpecial);
-      cell.addFood((Apple) food);
     } else {
       food = new Brocoli(isSpecial);
-      cell.addFood((Brocoli) food);
     }
+    cell.addFood(food);
     return food;
 
   }

@@ -17,13 +17,14 @@ public final class Python extends Snake {
   @Override
   public void eat(Food food, Cell cell) {
     if (food instanceof Brocoli) {
-      this.body.getLast().removeSnake();
-      this.body.removeLast();
-      this.body.getLast().removeSnake();
-      this.body.removeLast();
-      this.body.getLast().removeSnake();
-      this.body.removeLast();
-
+      for (int i = 0; i < 2; i++) {
+        if (this.body.size() > 0) {
+          this.body.getLast().removeSnake();
+          this.body.removeLast();
+        } else {
+          break;
+        }
+      }
     }
     onFoodEatenListener.onFoodEaten(food, cell);
   }
