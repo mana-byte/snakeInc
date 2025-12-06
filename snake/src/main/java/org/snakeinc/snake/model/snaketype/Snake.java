@@ -9,7 +9,10 @@ import org.snakeinc.snake.model.foodtype.Apple;
 import org.snakeinc.snake.model.foodtype.Brocoli;
 import org.snakeinc.snake.model.foodtype.Food;
 import org.snakeinc.snake.model.foodtype.FoodEatenListener;
+import org.snakeinc.snake.model.snakestate.Poisoned;
+import org.snakeinc.snake.model.snakestate.SnakeState;
 import org.snakeinc.snake.utils.IntegerWrapper;
+import org.snakeinc.snake.utils.Tuple2;
 import org.snakeinc.snake.model.Cell;
 import org.snakeinc.snake.model.Directions;
 import org.snakeinc.snake.model.Grid;
@@ -26,6 +29,8 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
   private final Grid grid;
   protected @Getter Color color;
   private int initSize;
+
+  protected SnakeState state = SnakeState.GOOD_HEALTH;
 
   public Snake(FoodEatenListener listener, Grid grid) {
     this.body = new ArrayList<>();
@@ -71,22 +76,12 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
   }
 
   public void move(Directions direction) throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
-    int x = getHead().getX();
-    int y = getHead().getY();
-    switch (direction) {
-      case Directions.UP:
-        y--;
-        break;
-      case Directions.DOWN:
-        y++;
-        break;
-      case Directions.LEFT:
-        x--;
-        break;
-      case Directions.RIGHT:
-        x++;
-        break;
-    }
+
+    Tuple2<Integer, Integer> newHeadPos = state.movementModifier(direction);
+    int x = getHead().getX() + newHeadPos.getFirst();
+    int y = getHead().getY() + newHeadPos.getSecond();
+
+
     Cell newHead = grid.getTile(x, y);
     if (newHead == null) {
       throw new OutOfPlayException();
@@ -101,7 +96,7 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
 
     // Eat apple :
     if (newHead.containsFood()) {
-      calculateScore(newHead.getFood());
+      calculateScoreAndChangeState(newHead.getFood());
       this.eat(newHead.getFood(), newHead);
       return;
     }
@@ -117,7 +112,7 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
       this.initSize--;
   }
 
-  private void calculateScore(Food food) {
+  private void calculateScoreAndChangeState(Food food) {
     if (food == null) {
       System.out.println("Food is null, cannot calculate score.");
       return;
@@ -128,6 +123,11 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
         Apple apple = (Apple) food;
         if (apple.isPoisonous()) {
           this.score.value = this.score.value + GameParams.SCORE_SPECIAL_FOOD;
+          if(state instanceof Poisoned) {
+            this.state = SnakeState.PERMANENTLY_DAMAGED;
+          } else {
+            this.state = SnakeState.POISONED;
+          }
           return;
         }
         this.score.value = this.score.value + GameParams.SCORE_APPLE;
@@ -140,6 +140,9 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
           return;
         }
         this.score.value = this.score.value + GameParams.SCORE_BROCOLI;
+        if(this.state instanceof Poisoned) {
+          this.state = SnakeState.GOOD_HEALTH;
+        }
       }
 
     } else {
