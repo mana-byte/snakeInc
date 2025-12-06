@@ -15,4 +15,5 @@ public class GameParams {
   public static Integer SCORE_APPLE = 2;
   public static Integer SCORE_BROCOLI = 1;
   public static Integer SCORE_SPECIAL_FOOD = 0;
+  public static Integer EASY_STRATEGY_SQUARE_SIZE = 5;
 }
