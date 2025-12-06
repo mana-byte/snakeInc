@@ -126,7 +126,7 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
 
       if (food instanceof Apple) {
         Apple apple = (Apple) food;
-        if (apple.isSteamed()) {
+        if (apple.isPoisonous()) {
           this.score.setValue(this.score.getValue() + GameParams.SCORE_SPECIAL_FOOD);
           return;
         }

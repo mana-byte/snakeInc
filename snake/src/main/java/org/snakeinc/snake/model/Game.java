@@ -14,7 +14,6 @@ import org.snakeinc.snake.utils.IntegerWrapper;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 public class Game {
 
@@ -37,7 +36,6 @@ public class Game {
   public void iterate(Directions direction) throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     snake.move(direction);
     basket.refillIfNeeded(1);
-    System.out.println("Score: " + score.value);
   }
 
   private Snake generateSnakeObject() {
@@ -52,5 +50,4 @@ public class Game {
         return new BoaConstrictor((food, cell) -> basket.removeFoodInCell(food, cell), grid);
     }
   }
-
 }

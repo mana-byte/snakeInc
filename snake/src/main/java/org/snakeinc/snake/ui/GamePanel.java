@@ -16,6 +16,7 @@ import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.exception.SizeIsZeroException;
 import org.snakeinc.snake.model.Game;
+import org.snakeinc.snake.utils.IntegerWrapper;
 import org.snakeinc.snake.model.Directions;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
@@ -50,15 +51,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     if (running) {
       UIUtils.draw(g, game);
     } else {
-      gameOver(g);
+      gameOver(g, game.getScore());
     }
   }
 
-  private void gameOver(Graphics g) {
+  private void gameOver(Graphics g, IntegerWrapper score) {
+    final int fontSize = 20;
+    final int offset = 10;
+
     g.setColor(Color.RED);
-    g.setFont(new Font("Arial", Font.BOLD, 20));
+    g.setFont(new Font("Arial", Font.BOLD, fontSize));
     FontMetrics metrics = getFontMetrics(g.getFont());
-    g.drawString("Game Over", (GAME_PIXEL_WIDTH - metrics.stringWidth("Game Over")) / 2, GAME_PIXEL_HEIGHT / 2);
+    g.drawString("Game Over" , (GAME_PIXEL_WIDTH - metrics.stringWidth("Game Over")) / 2, GAME_PIXEL_HEIGHT / 2);
+    g.drawString("Score: " + score.value, (GAME_PIXEL_WIDTH - metrics.stringWidth("Score: " + score.value)) / 2, GAME_PIXEL_HEIGHT / 2 + offset + fontSize);
   }
 
   @Override
