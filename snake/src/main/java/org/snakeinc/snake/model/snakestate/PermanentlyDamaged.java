@@ -3,7 +3,7 @@ package org.snakeinc.snake.model.snakestate;
 import org.snakeinc.snake.model.Directions;
 import org.snakeinc.snake.utils.Tuple2;
 
-public final class PermanentlyDamaged extends SnakeState {
+public final class PermanentlyDamaged implements SnakeState {
   public PermanentlyDamaged() {
     super();
   }

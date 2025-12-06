@@ -27,7 +27,7 @@ public class Game {
     this.score = new IntegerWrapper(0);
     grid = new Grid();
     basket = new Basket(grid);
-    this.snake = generateSnakeObject();
+    this.snake = generateSnakeObjectAtRandom();
     this.snake.setScoreWrapper(this.score);
 
     this.basket.setStrategyDifficulty(random.nextInt(0, 2));
@@ -40,7 +40,7 @@ public class Game {
     basket.refillIfNeeded(GameParams.NUMBER_OF_FOODS, snake.getHead());
   }
 
-  private Snake generateSnakeObject() {
+  private Snake generateSnakeObjectAtRandom() {
     Random random = new Random();
     int randint = random.nextInt(3);
     switch (randint) {

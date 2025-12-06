@@ -10,7 +10,7 @@ public class GameParams {
   public static Integer SNAKE_DEFAULT_X = 5;
   public static Integer SNAKE_DEFAULT_Y = 5;
 
-  public static Integer SNAKE_DEFAULT_SIZE = 4;
+  public static Integer SNAKE_DEFAULT_SIZE = 6;
 
   public static final Integer NUMBER_OF_FOODS = 3;
 

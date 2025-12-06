@@ -3,7 +3,7 @@ package org.snakeinc.snake.model.snakestate;
 import org.snakeinc.snake.model.Directions;
 import org.snakeinc.snake.utils.Tuple2;
 
-public final class Poisoned extends SnakeState {
+public final class Poisoned implements SnakeState {
   public Poisoned() {
     super();
   }
