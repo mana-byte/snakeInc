@@ -12,7 +12,6 @@ import org.snakeinc.snake.model.snaketype.Snake;
 import org.snakeinc.snake.utils.IntegerWrapper;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class Game {
@@ -20,8 +19,6 @@ public class Game {
   private final Grid grid;
   private final Basket basket;
   private final Snake snake;
-
-  @Getter
   private IntegerWrapper score;
 
   public Game() {

@@ -127,19 +127,19 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
       if (food instanceof Apple) {
         Apple apple = (Apple) food;
         if (apple.isPoisonous()) {
-          this.score.setValue(this.score.getValue() + GameParams.SCORE_SPECIAL_FOOD);
+          this.score.value = this.score.value + GameParams.SCORE_SPECIAL_FOOD;
           return;
         }
-        this.score.setValue(this.score.getValue() + GameParams.SCORE_APPLE);
+        this.score.value = this.score.value + GameParams.SCORE_APPLE;
       }
 
       if (food instanceof Brocoli) {
         Brocoli brocoli = (Brocoli) food;
         if (brocoli.isSteamed()) {
-          this.score.setValue(this.score.getValue() + GameParams.SCORE_SPECIAL_FOOD);
+          this.score.value = this.score.value + GameParams.SCORE_SPECIAL_FOOD;
           return;
         }
-        this.score.setValue(this.score.getValue() + GameParams.SCORE_BROCOLI);
+        this.score.value = this.score.value + GameParams.SCORE_BROCOLI;
       }
 
     } else {
