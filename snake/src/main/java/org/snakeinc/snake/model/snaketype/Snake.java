@@ -5,8 +5,11 @@ import org.snakeinc.snake.GameParams;
 import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.exception.SizeIsZeroException;
+import org.snakeinc.snake.model.foodtype.Apple;
+import org.snakeinc.snake.model.foodtype.Brocoli;
 import org.snakeinc.snake.model.foodtype.Food;
 import org.snakeinc.snake.model.foodtype.FoodEatenListener;
+import org.snakeinc.snake.utils.IntegerWrapper;
 import org.snakeinc.snake.model.Cell;
 import org.snakeinc.snake.model.Directions;
 import org.snakeinc.snake.model.Grid;
@@ -19,6 +22,7 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
 
   protected final ArrayList<Cell> body;
   protected final FoodEatenListener onFoodEatenListener;
+  protected IntegerWrapper score;
   private final Grid grid;
   protected @Getter Color color;
   private int initSize;
@@ -43,6 +47,10 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
     Cell head = grid.getTile(GameParams.SNAKE_DEFAULT_X, GameParams.SNAKE_DEFAULT_Y);
     head.addSnake(this);
     body.add(head);
+  }
+
+  public void setScoreWrapper(IntegerWrapper score) {
+    this.score = score;
   }
 
   public int getSize() {
@@ -106,6 +114,20 @@ public sealed class Snake permits BoaConstrictor, Anaconda, Python {
       body.removeLast();
     } else
       this.initSize--;
+  }
+
+  private void calculateScore(Food food) {
+    if (this.score != null) {
+      if (food instanceof Apple) {
+        this.score.setValue(this.score.getValue() + GameParams.SCORE_APPLE);
+      }
+      if (food instanceof Brocoli) {
+        // NOTE: FINISH HERE SCORE FOR EACH FOOD ITEM
+        this.score.setValue(this.score.getValue() + GameParams.SCORE_BROCOLI);
+      }
+    } else {
+      System.out.println("Score wrapper is not set for this snake.");
+    }
   }
 
 }
