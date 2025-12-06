@@ -2,6 +2,7 @@ package org.snakeinc.snake.model;
 
 import java.util.Random;
 
+import org.snakeinc.snake.GameParams;
 import org.snakeinc.snake.exception.OutOfPlayException;
 import org.snakeinc.snake.exception.SelfCollisionException;
 import org.snakeinc.snake.exception.SizeIsZeroException;
@@ -22,17 +23,21 @@ public class Game {
   private IntegerWrapper score;
 
   public Game() {
+    Random random = new Random();
     this.score = new IntegerWrapper(0);
     grid = new Grid();
     basket = new Basket(grid);
     this.snake = generateSnakeObject();
     this.snake.setScoreWrapper(this.score);
-    basket.refillIfNeeded(1, snake.getHead());
+
+    this.basket.setStrategyDifficulty(random.nextInt(0, 2));
+
+    basket.refillIfNeeded(GameParams.NUMBER_OF_FOODS, snake.getHead());
   }
 
   public void iterate(Directions direction) throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     snake.move(direction);
-    basket.refillIfNeeded(1, snake.getHead());
+    basket.refillIfNeeded(GameParams.NUMBER_OF_FOODS, snake.getHead());
   }
 
   private Snake generateSnakeObject() {

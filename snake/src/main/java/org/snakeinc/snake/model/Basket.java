@@ -19,7 +19,7 @@ public class Basket {
 
   private Grid grid;
   private List<Food> foods;
-  private final FoodContext foodContext = new FoodContext(new EasyStrategy());
+  private final FoodContext foodContext = new FoodContext(new RandomStrategy());
 
   public Basket(Grid grid) {
     foods = new ArrayList<>();
@@ -60,6 +60,20 @@ public class Basket {
     int missingFood = nFoods - foods.size();
     if (missingFood > 0) {
       refill(missingFood, snakeHead);
+    }
+  }
+
+  public void setStrategyDifficulty(int difficulty) {
+    switch (difficulty) {
+      case 0:
+        foodContext.setStrategy(new EasyStrategy());
+        break;
+      case 1:
+        foodContext.setStrategy(new HardStrategy());
+        break;
+      default:
+        foodContext.setStrategy(new RandomStrategy());
+        break;
     }
   }
 

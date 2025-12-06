@@ -12,6 +12,8 @@ public class GameParams {
 
   public static Integer SNAKE_DEFAULT_SIZE = 4;
 
+  public static final Integer NUMBER_OF_FOODS = 3;
+
   public static Integer SCORE_APPLE = 2;
   public static Integer SCORE_BROCOLI = 1;
   public static Integer SCORE_SPECIAL_FOOD = 0;
