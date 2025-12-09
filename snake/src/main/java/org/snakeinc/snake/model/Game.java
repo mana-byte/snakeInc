@@ -26,7 +26,7 @@ public class Game {
     Random random = new Random();
     this.score = new IntegerWrapper(0);
     grid = new Grid();
-    basket = new Basket(grid);
+    basket = new CrazyBasket(grid);
     this.snake = generateSnakeObjectAtRandom();
     this.snake.setScoreWrapper(this.score);
 
@@ -38,6 +38,9 @@ public class Game {
   public void iterate(Directions direction) throws OutOfPlayException, SelfCollisionException, SizeIsZeroException {
     snake.move(direction);
     basket.refillIfNeeded(GameParams.NUMBER_OF_FOODS, snake.getHead());
+    if (basket instanceof CrazyBasket) {
+      ((CrazyBasket) basket).moveFoodWhenSnakeAround(snake.getHead());
+    }
   }
 
   private Snake generateSnakeObjectAtRandom() {

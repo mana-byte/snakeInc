@@ -17,9 +17,9 @@ import lombok.Data;
 @Data
 public class Basket {
 
-  private Grid grid;
-  private List<Food> foods;
-  private final FoodContext foodContext = new FoodContext(new RandomStrategy());
+  protected Grid grid;
+  protected List<Food> foods;
+  protected final FoodContext foodContext = new FoodContext(new RandomStrategy());
 
   public Basket(Grid grid) {
     foods = new ArrayList<>();
@@ -28,7 +28,6 @@ public class Basket {
 
   public void addFood(Cell cell, Cell snakeHead) {
     // Generates a random cell if null and makes sure it is not on the snake
-    Random random = new Random();
     if (cell == null) {
       Tuple2<Integer, Integer> coords = foodContext.executeStrategy(snakeHead);
       cell = grid.getTile(coords.getFirst(), coords.getSecond());

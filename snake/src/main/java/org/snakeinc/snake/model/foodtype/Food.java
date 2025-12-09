@@ -5,11 +5,18 @@ import java.awt.Color;
 import org.snakeinc.snake.model.Cell;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public sealed class Food permits Apple, Brocoli {
 
   protected Color color;
+
+  @Setter
+  @Getter
+  protected Cell cell;
+
+  private boolean movedOnce = false;
   public Food() {
     this.color = Color.WHITE;
   }
@@ -23,11 +30,23 @@ public sealed class Food permits Apple, Brocoli {
       food = new Brocoli(isSpecial);
     }
     cell.addFood(food);
+    food.setCell(cell);
     return food;
 
   }
 
   public Color getColor() {
     return color;
+  }
+
+  public void moveFoodToCell(Cell newCell) {
+    this.cell.removeFood();
+    this.setCell(newCell);
+    newCell.addFood(this);
+    this.movedOnce = true;
+  }
+
+  public boolean GetMovedOnce() {
+    return this.movedOnce;
   }
 }
